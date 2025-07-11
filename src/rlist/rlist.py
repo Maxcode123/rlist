@@ -1,4 +1,4 @@
-from typing import Self, Iterable, Generic
+from typing import Self, Iterable, Generic, Iterator
 from itertools import filterfalse
 from functools import wraps
 from sys import maxsize
@@ -14,6 +14,21 @@ def _delegate(rlist_method):
     @wraps(rlist_method)
     def call_list_method(self, *args, **kwargs):
         return getattr(self._list, rlist_method.__name__)(*args, **kwargs)
+
+    return call_list_method
+
+def _delegate_comparison(rlist_method):
+    """
+    Wrap a comparison method with this decorator to delegate the method call to the underlying
+    builtin list data structure of the rlist.
+    When the argument is an rlist the underlying lists are compared.
+    """
+    @wraps(rlist_method)
+    def call_list_method(self, other):
+        if not isinstance(other, rlist):
+            return getattr(self._list, rlist_method.__name__)(other)
+
+        return getattr(self._list, rlist_method.__name__)(other._list)
 
     return call_list_method
 
@@ -60,7 +75,8 @@ class rlist(Generic[R]):
     @_delegate
     def remove(self, item: R) -> R: ...
 
-    def reverse(self) -> Self: ...
+    @_delegate
+    def reverse(self) -> None: ...
 
     def select(self, func: FilterFunc) -> Self:
         return rlist(filter(func, self._list))
@@ -68,8 +84,8 @@ class rlist(Generic[R]):
     @_delegate
     def sort(self, *, key: SortFunc, reverse: bool = False) -> None: ...
 
-    @_delegate
-    def __add__(self, other) -> Self: ...
+    def __add__(self, other) -> Self:
+        return rlist(self._list + other)
 
     @_delegate
     def __contains__(self, item: R) -> bool: ...
@@ -77,35 +93,44 @@ class rlist(Generic[R]):
     @_delegate
     def __delitem__(self, item: R) -> None: ...
 
+    @_delegate_comparison
     def __eq__(self, other) -> bool: ...
 
+    @_delegate_comparison
     def __ge__(self, other) -> bool: ...
 
     @_delegate
     def __getitem__(self, index: int) -> R: ...
 
+    @_delegate_comparison
     def __gt__(self, other) -> bool: ...
 
     @_delegate
-    def __iter__(self) -> Iterable: ...
+    def __iter__(self) -> Iterator[R]: ...
 
+    @_delegate_comparison
     def __le__(self, other) -> bool: ...
 
     @_delegate
     def __len__(self) -> int: ...
 
+    @_delegate_comparison
     def __lt__(self, other) -> bool: ...
 
-    def __mul__(self, other) -> Self: ...
+    def __mul__(self, other) -> Self:
+        return rlist(self._list * other)
 
+    @_delegate_comparison
     def __ne__(self, other) -> bool: ...
 
-    def __repr__(self) -> str: ...
+    def __repr__(self) -> str:
+        return str(self)
 
     @_delegate
-    def __reversed__(self) -> Self: ...
+    def __reversed__(self) -> Iterator[R]: ...
 
-    def __rmul__(self, other) -> Self: ...
+    def __rmul__(self, other) -> Self:
+        return rlist(other * self._list)
 
     @_delegate
     def __setitem__(self, index: int, item: R) -> None: ...
@@ -113,4 +138,5 @@ class rlist(Generic[R]):
     @_delegate
     def __sizeof__(self) -> int: ...
 
-    def __str__(self) -> str: ...
+    def __str__(self) -> str:
+        return f"<rlist: {self._list}>"
