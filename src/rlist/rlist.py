@@ -1,9 +1,21 @@
-from typing import Self, Iterable, Generic, Iterator
+from typing import Self, Iterable, Generic, Iterator, Any, TypeAlias
 from itertools import filterfalse
 from functools import wraps
 from sys import maxsize
 
-from rlist.types import R, SortFunc, FilterFunc, MapFunc
+from rlist.types import (
+    R,
+    SortFunc,
+    FilterFunc,
+    MapFunc,
+    ListMultiplier,
+    ListAddend,
+    ListComparand,
+)
+
+RlistMultiplier: TypeAlias = ListMultiplier
+RlistAddend: TypeAlias = ListAddend | "rlist"
+RlistComparand: TypeAlias = ListComparand | "rlist"
 
 
 def _delegate(rlist_method):
@@ -51,22 +63,22 @@ class rlist(Generic[R]):
     @_delegate
     def clear(self) -> None: ...
 
-    def copy(self) -> Self:
+    def copy(self) -> "rlist":
         return rlist(self._list)
 
     @_delegate
-    def count(self, item: R) -> int: ...
+    def count(self, item: R) -> int: ... # ty: ignore[invalid-return-type]
 
     @_delegate
     def extend(self, iterable: Iterable[R]) -> None: ...
 
     @_delegate
-    def index(self, item: R, start: int = 0, stop: int = maxsize) -> int: ...
+    def index(self, item: R, start: int = 0, stop: int = maxsize) -> int: ... # ty: ignore[invalid-return-type]
 
     @_delegate
     def insert(self, index: int, item: R) -> None: ...
 
-    def map(self, func: MapFunc) -> Self:
+    def map(self, func: MapFunc) -> "rlist":
         """
         Apply the given function to the items of the list and return a new instance
         of rlist with the mapped items.
@@ -89,9 +101,9 @@ class rlist(Generic[R]):
         return rlist(map(func, self._list))
 
     @_delegate
-    def pop(self, index=None) -> R: ...
+    def pop(self, index: int | None = None) -> R: ... # ty: ignore[invalid-return-type]
 
-    def reject(self, func: FilterFunc) -> Self:
+    def reject(self, func: FilterFunc) -> "rlist":
         """
         Reject items from the list by applying the given function and return
         a new instance of rlist with the non-rejected items.
@@ -114,12 +126,12 @@ class rlist(Generic[R]):
         return rlist(filterfalse(func, self._list))
 
     @_delegate
-    def remove(self, item: R) -> R: ...
+    def remove(self, item: R) -> R: ... # ty: ignore[invalid-return-type]
 
     @_delegate
     def reverse(self) -> None: ...
 
-    def select(self, func: FilterFunc) -> Self:
+    def select(self, func: FilterFunc) -> "rlist":
         """
         Select items from the list by applying the given function and return
         a new instance of rlist with the selected items.
@@ -144,28 +156,25 @@ class rlist(Generic[R]):
     @_delegate
     def sort(self, *, key: SortFunc, reverse: bool = False) -> None: ...
 
-    def __add__(self, other) -> Self:
+    def __add__(self, other: RlistAddend) -> "rlist":
         return rlist(self._list + other)
 
     @_delegate
-    def __contains__(self, item: R) -> bool: ...
+    def __contains__(self, item: R) -> bool: ... # ty: ignore[invalid-return-type]
+
+    @_delegate_comparison
+    def __eq__(self, other: Any) -> bool: ... # ty: ignore[invalid-return-type]
+
+    @_delegate_comparison
+    def __ge__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __delitem__(self, item: R) -> None: ...
+    def __getitem__(self, index: int) -> R: ... # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __eq__(self, other) -> bool: ...
+    def __gt__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
 
-    @_delegate_comparison
-    def __ge__(self, other) -> bool: ...
-
-    @_delegate
-    def __getitem__(self, index: int) -> R: ...
-
-    @_delegate_comparison
-    def __gt__(self, other) -> bool: ...
-
-    def __iadd__(self, other) -> Self:
+    def __iadd__(self, other: RlistAddend) -> Self:
         if not isinstance(other, rlist):
             self._list += other
         else:
@@ -173,7 +182,7 @@ class rlist(Generic[R]):
 
         return self
 
-    def __isub__(self, other) -> Self:
+    def __isub__(self, other: Any) -> Self:
         if not isinstance(other, rlist):
             self._list -= other
         else:
@@ -181,7 +190,7 @@ class rlist(Generic[R]):
 
         return self
 
-    def __imul__(self, other) -> Self:
+    def __imul__(self, other: RlistMultiplier) -> Self:
         if not isinstance(other, rlist):
             self._list *= other
         else:
@@ -190,43 +199,40 @@ class rlist(Generic[R]):
         return self
 
     @_delegate
-    def __iter__(self) -> Iterator[R]: ...
+    def __iter__(self) -> Iterator[R]: ... # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __le__(self, other) -> bool: ...
+    def __le__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __len__(self) -> int: ...
+    def __len__(self) -> int: ... # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __lt__(self, other) -> bool: ...
+    def __lt__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
 
-    def __mul__(self, other) -> Self:
+    def __mul__(self, other: RlistMultiplier) -> "rlist":
         return rlist(self._list * other)
 
     @_delegate_comparison
-    def __ne__(self, other) -> bool: ...
+    def __ne__(self, other: Any) -> bool: ... # ty: ignore[invalid-return-type]
 
-    def __radd__(self, other) -> Self:
+    def __radd__(self, other: RlistAddend) -> "rlist":
         return rlist(other + self._list)
 
     def __repr__(self) -> str:
         return str(self)
 
-    def __rmul__(self, other) -> Self:
+    def __rmul__(self, other: RlistMultiplier) -> "rlist":
         return rlist(other * self._list)
 
     @_delegate
-    def __reversed__(self) -> Iterator[R]: ...
-
-    def __rmul__(self, other) -> Self:
-        return rlist(other * self._list)
+    def __reversed__(self) -> Iterator[R]: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
     def __setitem__(self, index: int, item: R) -> None: ...
 
     @_delegate
-    def __sizeof__(self) -> int: ...
+    def __sizeof__(self) -> int: ...  # ty: ignore[invalid-return-type]
 
     def __str__(self) -> str:
         return f"<rlist: {self._list}>"
