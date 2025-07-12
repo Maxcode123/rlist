@@ -11,11 +11,13 @@ def _delegate(rlist_method):
     Wrap a method with this decorator to delegate the method call to the underlying
     builtin list data structure of the rlist.
     """
+
     @wraps(rlist_method)
     def call_list_method(self, *args, **kwargs):
         return getattr(self._list, rlist_method.__name__)(*args, **kwargs)
 
     return call_list_method
+
 
 def _delegate_comparison(rlist_method):
     """
@@ -23,6 +25,7 @@ def _delegate_comparison(rlist_method):
     builtin list data structure of the rlist.
     When the argument is an rlist the underlying lists are compared.
     """
+
     @wraps(rlist_method)
     def call_list_method(self, other):
         if not isinstance(other, rlist):
@@ -64,12 +67,50 @@ class rlist(Generic[R]):
     def insert(self, index: int, item: R) -> None: ...
 
     def map(self, func: MapFunc) -> Self:
+        """
+        Apply the given function to the items of the list and return a new instance
+        of rlist with the mapped items.
+
+        ## Example
+
+        ```python
+        from rlist import rlist
+        from dataclasses import dataclass
+
+        @dataclass
+        class Person:
+            id: int
+            name: str
+
+        people = rlist([Person(1, "John"), Person(2, "George"), Person(3, "Mike")])
+        names = people.map(lambda p: p.name)
+        ```
+        """
         return rlist(map(func, self._list))
 
     @_delegate
     def pop(self, index=None) -> R: ...
 
     def reject(self, func: FilterFunc) -> Self:
+        """
+        Reject items from the list by applying the given function and return
+        a new instance of rlist with the non-rejected items.
+
+        ## Example
+
+        ```python
+        from rlist import rlist
+        from dataclasses import dataclass
+
+        @dataclass
+        class Person:
+            id: int
+            name: str
+
+        people = rlist([Person(1, "John"), Person(2, "George"), Person(3, "Mike")])
+        people_without_e = people.reject(lambda p: 'e' in p.name)
+        ```
+        """
         return rlist(filterfalse(func, self._list))
 
     @_delegate
@@ -79,6 +120,25 @@ class rlist(Generic[R]):
     def reverse(self) -> None: ...
 
     def select(self, func: FilterFunc) -> Self:
+        """
+        Select items from the list by applying the given function and return
+        a new instance of rlist with the selected items.
+
+        ## Example
+
+        ```python
+        from rlist import rlist
+        from dataclasses import dataclass
+
+        @dataclass
+        class Person:
+            id: int
+            name: str
+
+        people = rlist([Person(1, "John"), Person(2, "George"), Person(3, "Mike")])
+        people_with_e = people.select(lambda p: 'e' in p.name)
+        ```
+        """
         return rlist(filter(func, self._list))
 
     @_delegate
