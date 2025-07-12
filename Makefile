@@ -4,6 +4,9 @@ install-local-package:
 format:
 	ruff format
 
+lint:
+	ruff check --exclude src/rlist/tests/cpython
+
 type-check:
 	uv run ty check --exclude src/rlist/tests/
 
