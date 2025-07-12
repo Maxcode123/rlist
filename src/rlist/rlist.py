@@ -165,6 +165,30 @@ class rlist(Generic[R]):
     @_delegate_comparison
     def __gt__(self, other) -> bool: ...
 
+    def __iadd__(self, other) -> Self:
+        if not isinstance(other, rlist):
+           self._list += other
+        else:
+            self._list += other._list
+
+        return self
+
+    def __isub__(self, other) -> Self:
+        if not isinstance(other, rlist):
+            self._list -= other
+        else:
+            self._list -= other._list
+
+        return self
+
+    def __imul__(self, other) -> Self:
+        if not isinstance(other, rlist):
+            self._list *= other
+        else:
+            self._list *= other._list
+
+        return self
+
     @_delegate
     def __iter__(self) -> Iterator[R]: ...
 
@@ -183,8 +207,14 @@ class rlist(Generic[R]):
     @_delegate_comparison
     def __ne__(self, other) -> bool: ...
 
+    def __radd__(self, other) -> Self:
+        return rlist(other + self._list)
+
     def __repr__(self) -> str:
         return str(self)
+
+    def __rmul__(self, other) -> Self:
+        return rlist(other * self._list)
 
     @_delegate
     def __reversed__(self) -> Iterator[R]: ...
