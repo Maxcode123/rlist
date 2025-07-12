@@ -21,9 +21,9 @@ def _delegate(rlist_method):
 
 def _delegate_comparison(rlist_method):
     """
-    Wrap a comparison method with this decorator to delegate the method call to the underlying
+    Wrap a comparison method with this decorator to delegate the comparison to the underlying
     builtin list data structure of the rlist.
-    When the argument is an rlist the underlying lists are compared.
+    If the argument is an rlist its' underlying list is used for the comparison.
     """
 
     @wraps(rlist_method)
