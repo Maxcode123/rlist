@@ -4,6 +4,9 @@ install-local-package:
 format:
 	ruff format
 
+type-check:
+	uv run ty check --exclude src/rlist/tests/
+
 clean:
 	rm -rf src/rlist.egg-info
 
