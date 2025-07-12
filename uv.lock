@@ -9,12 +9,16 @@ source = { virtual = "." }
 [package.dev-dependencies]
 dev = [
     { name = "ty" },
+    { name = "unittest-extensions" },
 ]
 
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "ty", specifier = ">=0.0.1a14" }]
+dev = [
+    { name = "ty", specifier = ">=0.0.1a14" },
+    { name = "unittest-extensions", specifier = ">=0.4.0" },
+]
 
 [[package]]
 name = "ty"
@@ -39,4 +43,13 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/11/b6/468c98f9520515fd9a65ce5a51c9aa39f7f944cb8f320328839cef65d1f1/ty-0.0.1a14-py3-none-win32.whl", hash = "sha256:6c3e87f4549a1bf7524df074a4fe9a5815aff25e536c5fc6f1518b72e74a17cf", size = 6573723 },
     { url = "https://files.pythonhosted.org/packages/1c/82/a771661d3d64e17688063dc5573e8eebc0683f581c843b840f5b03d108f7/ty-0.0.1a14-py3-none-win_amd64.whl", hash = "sha256:0ed6145dae24b68638037d7c82f094b22adfb48114678120cf392092973fad96", size = 7181298 },
     { url = "https://files.pythonhosted.org/packages/9d/d0/68b106ddc25239d4a7114e64211aa5ad5d27488c1a318ab8ad057b88b4a7/ty-0.0.1a14-py3-none-win_arm64.whl", hash = "sha256:67717fbbb501c9deb11141662688804513082992aaeb5fdc6a3b7cd8e77eea8e", size = 6788031 },
+]
+
+[[package]]
+name = "unittest-extensions"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/09/e8/145f399a57d05a8c6af7f019e487a3d7fe0c99ef4a53a30470bd1f3cf55e/unittest_extensions-0.4.0.tar.gz", hash = "sha256:9cb166717bc39d9465b44a54b8f9c7c0a1027d169052b3b0c99abdb39fdd64f7", size = 8429 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0f/73/93fdbad6cb4afb2cff81abcd77536dfe99cd161678a41a366fc7e02e7d2d/unittest_extensions-0.4.0-py3-none-any.whl", hash = "sha256:fa1479dde0441dc8057f4b989e8f2048a31ff81094b3460407bbfd311369ebbc", size = 7630 },
 ]

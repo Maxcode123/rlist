@@ -12,4 +12,5 @@ line-length = 88
 [dependency-groups]
 dev = [
     "ty>=0.0.1a14",
+    "unittest-extensions>=0.4.0",
 ]
