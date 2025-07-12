@@ -67,13 +67,15 @@ class rlist(Generic[R]):
         return rlist(self._list)
 
     @_delegate
-    def count(self, item: R) -> int: ... # ty: ignore[invalid-return-type]
+    def count(self, item: R) -> int: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
     def extend(self, iterable: Iterable[R]) -> None: ...
 
     @_delegate
-    def index(self, item: R, start: int = 0, stop: int = maxsize) -> int: ... # ty: ignore[invalid-return-type]
+    def index(
+        self, item: R, start: int = 0, stop: int = maxsize
+    ) -> int: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
     def insert(self, index: int, item: R) -> None: ...
@@ -101,7 +103,7 @@ class rlist(Generic[R]):
         return rlist(map(func, self._list))
 
     @_delegate
-    def pop(self, index: int | None = None) -> R: ... # ty: ignore[invalid-return-type]
+    def pop(self, index: int | None = None) -> R: ...  # ty: ignore[invalid-return-type]
 
     def reject(self, func: FilterFunc) -> "rlist":
         """
@@ -126,7 +128,7 @@ class rlist(Generic[R]):
         return rlist(filterfalse(func, self._list))
 
     @_delegate
-    def remove(self, item: R) -> R: ... # ty: ignore[invalid-return-type]
+    def remove(self, item: R) -> R: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
     def reverse(self) -> None: ...
@@ -160,19 +162,23 @@ class rlist(Generic[R]):
         return rlist(self._list + other)
 
     @_delegate
-    def __contains__(self, item: R) -> bool: ... # ty: ignore[invalid-return-type]
+    def __contains__(self, item: R) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __eq__(self, other: Any) -> bool: ... # ty: ignore[invalid-return-type]
+    def __eq__(self, other: Any) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __ge__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
+    def __ge__(
+        self, other: RlistComparand
+    ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __getitem__(self, index: int) -> R: ... # ty: ignore[invalid-return-type]
+    def __getitem__(self, index: int) -> R: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __gt__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
+    def __gt__(
+        self, other: RlistComparand
+    ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     def __iadd__(self, other: RlistAddend) -> Self:
         if not isinstance(other, rlist):
@@ -199,22 +205,26 @@ class rlist(Generic[R]):
         return self
 
     @_delegate
-    def __iter__(self) -> Iterator[R]: ... # ty: ignore[invalid-return-type]
+    def __iter__(self) -> Iterator[R]: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __le__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
+    def __le__(
+        self, other: RlistComparand
+    ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __len__(self) -> int: ... # ty: ignore[invalid-return-type]
+    def __len__(self) -> int: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
-    def __lt__(self, other: RlistComparand) -> bool: ... # ty: ignore[invalid-return-type]
+    def __lt__(
+        self, other: RlistComparand
+    ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     def __mul__(self, other: RlistMultiplier) -> "rlist":
         return rlist(self._list * other)
 
     @_delegate_comparison
-    def __ne__(self, other: Any) -> bool: ... # ty: ignore[invalid-return-type]
+    def __ne__(self, other: Any) -> bool: ...  # ty: ignore[invalid-return-type]
 
     def __radd__(self, other: RlistAddend) -> "rlist":
         return rlist(other + self._list)
