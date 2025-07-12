@@ -167,7 +167,7 @@ class rlist(Generic[R]):
 
     def __iadd__(self, other) -> Self:
         if not isinstance(other, rlist):
-           self._list += other
+            self._list += other
         else:
             self._list += other._list
 
