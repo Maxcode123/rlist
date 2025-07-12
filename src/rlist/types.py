@@ -11,3 +11,7 @@ class SupportsLt(Protocol):
 FilterFunc: TypeAlias = Callable[[R], bool]
 MapFunc: TypeAlias = Callable[[R], Any]
 SortFunc: TypeAlias = Callable[[R], SupportsLt]
+
+ListMultiplier: TypeAlias = int
+ListAddend: TypeAlias = list[R]
+ListComparand: TypeAlias = list[R]
