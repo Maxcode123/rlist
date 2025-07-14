@@ -177,7 +177,9 @@ class rlist(Generic[R]):
     ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __getitem__(self, index: int | slice) -> R: ...  # ty: ignore[invalid-return-type]
+    def __getitem__(
+        self, index: int | slice
+    ) -> R: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
     def __gt__(
