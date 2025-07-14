@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Self, Iterable, Generic, Iterator, Any, TypeAlias, Union
+from typing import Self, Iterable, Generic, Iterator, Any, Union
 from itertools import filterfalse
 from functools import wraps
 from sys import maxsize
@@ -14,9 +14,9 @@ from rlist.types import (
     ListComparand,
 )
 
-RlistMultiplier: TypeAlias = ListMultiplier
-RlistAddend: TypeAlias = Union[ListAddend, "rlist"]
-RlistComparand: TypeAlias = Union[ListComparand, "rlist"]
+type RlistMultiplier = ListMultiplier
+type RlistAddend = Union[ListAddend, "rlist"]
+type RlistComparand = Union[ListComparand, "rlist"]
 
 
 def _delegate(rlist_method):
