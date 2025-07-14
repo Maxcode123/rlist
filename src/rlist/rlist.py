@@ -1,4 +1,5 @@
-from typing import Self, Iterable, Generic, Iterator, Any, TypeAlias
+from __future__ import annotations
+from typing import Self, Iterable, Generic, Iterator, Any, TypeAlias, Union
 from itertools import filterfalse
 from functools import wraps
 from sys import maxsize
@@ -14,8 +15,8 @@ from rlist.types import (
 )
 
 RlistMultiplier: TypeAlias = ListMultiplier
-RlistAddend: TypeAlias = ListAddend | "rlist"
-RlistComparand: TypeAlias = ListComparand | "rlist"
+RlistAddend: TypeAlias = Union[ListAddend, "rlist"]
+RlistComparand: TypeAlias = Union[ListComparand, "rlist"]
 
 
 def _delegate(rlist_method):
@@ -164,6 +165,9 @@ class rlist(Generic[R]):
     @_delegate
     def __contains__(self, item: R) -> bool: ...  # ty: ignore[invalid-return-type]
 
+    @_delegate
+    def __delitem__(self, index: int | slice) -> None: ...
+
     @_delegate_comparison
     def __eq__(self, other: Any) -> bool: ...  # ty: ignore[invalid-return-type]
 
@@ -173,7 +177,7 @@ class rlist(Generic[R]):
     ) -> bool: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __getitem__(self, index: int) -> R: ...  # ty: ignore[invalid-return-type]
+    def __getitem__(self, index: int | slice) -> R: ...  # ty: ignore[invalid-return-type]
 
     @_delegate_comparison
     def __gt__(
@@ -239,7 +243,7 @@ class rlist(Generic[R]):
     def __reversed__(self) -> Iterator[R]: ...  # ty: ignore[invalid-return-type]
 
     @_delegate
-    def __setitem__(self, index: int, item: R) -> None: ...
+    def __setitem__(self, index: int | slice, item: R) -> None: ...
 
     @_delegate
     def __sizeof__(self) -> int: ...  # ty: ignore[invalid-return-type]
