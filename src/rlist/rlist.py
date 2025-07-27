@@ -65,6 +65,9 @@ class rlist(Generic[R]):
     def clear(self) -> None: ...
 
     def copy(self) -> "rlist":
+        """
+        Return a shallow copy of the rlist.
+        """
         return rlist(self._list)
 
     @_delegate
