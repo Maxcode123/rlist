@@ -24,5 +24,5 @@ people.select(lambda p: p["age"] > 30).reject(lambda p: "l" in p["name"]).map(la
 ## Installation
 
 ```console
-pip install rlist
+pip install record-list
 ```
