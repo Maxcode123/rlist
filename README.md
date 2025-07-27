@@ -1,7 +1,9 @@
 # rlist
 `rlist` is a small Python library that provides the `rlist` type (record list), which 
 is a plain Python list extended with a few handy methods for in-place manipulation.  
-The methods are inspired by the corresponding Ruby array methods.
+The methods are inspired by the corresponding Ruby array methods.  
+
+**Documentation:** https://maxcode123.github.io/rlist/  
 
 **Example**
 ```py
