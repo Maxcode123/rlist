@@ -10,9 +10,6 @@ lint:
 type-check:
 	uv run ty check --exclude src/rlist/tests/
 
-clean:
-	rm -rf src/rlist.egg-info
-
 test-cpython:
 	uv run python -m unittest -v src/rlist/tests/cpython/test_rlist.py
 
@@ -22,8 +19,14 @@ test:
 start-doc-server:
 	uv run python -m mkdocs serve
 
+deploy-documentation:
+	uv run python -m mkdocs gh-deploy --config-file mkdocs.yml
+
 build:
 	uv build
+
+clean:
+	rm -rf dist src/rlist.egg-info
 
 publish:
 	uv publish
