@@ -1,0 +1,46 @@
+site_name: rlist
+site_url: https://maxcode123.github.io/rlist/
+repo_url: https://github.com/Maxcode123/rlist
+repo_name: Maxcode123/rlist
+nav:
+  - Get started:
+    - What is rlist?: index.md
+    - Installation: installation.md
+
+  - API Documentation:
+    - rlist: rlist.md
+ 
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.path
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: light green
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: light green
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+- mkdocstrings
+- search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

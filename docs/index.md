@@ -1,4 +1,3 @@
-# rlist
 `rlist` is a small Python library that provides the `rlist` type (record list), which 
 is a plain Python list extended with a few handy methods for in-place manipulation.  
 The methods are inspired by the corresponding Ruby array methods.
@@ -16,11 +15,4 @@ people = [
 ]
 
 people.select(lambda p: p["age"] > 30).reject(lambda p: "l" in p["name"]).map(lambda p: p["sex"])
-```
-
-
-## Installation
-
-```console
-pip install rlist
 ```
