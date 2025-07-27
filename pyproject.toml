@@ -11,7 +11,7 @@ exclude = ["rlist.tests*"]
 line-length = 88
 
 [project]
-name = "rlist"
+name = "record-list"
 version = "0.1.0"
 description = "Record list with handy methods"
 authors = [
