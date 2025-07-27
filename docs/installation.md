@@ -1,5 +1,5 @@
 Installation is as easy as:
 
 ```console
-pip install rlist
+pip install record-list
 ```
