@@ -1,3 +1,5 @@
+
+
 install-local-package:
 	uv pip install -e .
 
@@ -15,3 +17,13 @@ clean:
 
 test-cpython:
 	uv run python -m unittest -v src/rlist/tests/cpython/test_rlist.py
+
+start-doc-server:
+	uv run python -m mkdocs serve
+
+build:
+	uv build
+
+publish:
+	uv publish
+
