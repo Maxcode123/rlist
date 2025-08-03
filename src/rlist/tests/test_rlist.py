@@ -29,6 +29,28 @@ class TestRlist(TestCase):
         return rlist(iterable)
 
 
+class TestRlistInit(TestRlist):
+    def subject(self, iterable=None):
+        return self._rlist(iterable)
+
+    def test_creates_new_internal_list(self):
+        lst = [1, 2, 3]
+        self.assertIsNot(self._rlist(lst)._list, lst)
+
+    def test_with_empty_iterable(self):
+        self._rlist([])
+
+    def test_with_non_iterable(self):
+        with self.assertRaises(TypeError):
+            self._rlist(123123)
+
+    def test_internal_list_is_shallow_copy(self):
+        lst = self.models()
+        rlst = self._rlist(lst)
+        setattr(lst[0], "attr", "mock")
+        self.assertEqual(rlst[0].attr, "mock")
+
+
 class TestRlistMap(TestRlist):
     def subject(self, func, iterable=None):
         return self._rlist(iterable).map(func)
@@ -115,6 +137,7 @@ class TestRlistReject(TestRlist):
         copy_lst = lst.reject(lambda m: False)
         self.assertIs(obj, copy_lst[0])
 
+
 class TestRlistSelect(TestRlist):
     def subject(self, func, iterable=None):
         return self._rlist(iterable).select(func)
@@ -157,3 +180,25 @@ class TestRlistSelect(TestRlist):
         obj = lst[0]
         copy_lst = lst.select(lambda m: True)
         self.assertIs(obj, copy_lst[0])
+
+
+class TestRlistToList(TestRlist):
+    def subject(self, iterable=None):
+        return self._rlist(iterable).to_list()
+
+    def test_to_list_returns_new_instance(self):
+        lst = self._rlist()._list
+        self.assertIsNot(self._rlist().to_list(), lst)
+
+    @args(iterable=[1, 2, 3])
+    def test_returns_correct_list(self):
+        self.assertResultCount([1, 2, 3])
+
+    def test_returns_shallow_copy(self):
+        lst = self._rlist()
+        obj = lst[0]
+        setattr(obj, "attr", "mock")
+        self.assertEqual(lst.to_list()[0].attr, "mock")
+
+    def test_empty_rlist(self):
+        self.assertCountEqual(self._rlist([]).to_list(), [])
