@@ -162,6 +162,21 @@ class rlist(Generic[R]):
     @_delegate
     def sort(self, *, key: SortFunc, reverse: bool = False) -> None: ...
 
+    def to_list(self) -> list[R]:
+        """
+        Convert the rlist to a plain list object.
+        Creates a new list instance.
+
+        ## Example
+
+        ```python
+        from rlist import rlist
+
+        lst = rlist([1, 2, 3, 4]).select(lambda i: i > 2).to_list()
+        ```
+        """
+        return list(self._list)
+
     def __add__(self, other: RlistAddend) -> "rlist":
         return rlist(self._list + other)
 
