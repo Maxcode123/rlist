@@ -20,7 +20,7 @@ authors = [
 keywords = ["rlist", "list"]
 license = "MIT"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
