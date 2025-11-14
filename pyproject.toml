@@ -12,7 +12,7 @@ line-length = 88
 
 [project]
 name = "record-list"
-version = "0.2.1"
+version = "0.2.2"
 description = "Record list with handy methods"
 authors = [
     { name="Maximos Nikiforakis", email="nikiforos@live.co.uk" },
