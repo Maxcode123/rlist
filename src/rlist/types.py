@@ -1,4 +1,4 @@
-from typing import Protocol, Any, Callable, TypeVar
+from typing import Protocol, Any, Callable, TypeVar, TypeAlias
 
 
 R = TypeVar("R")
@@ -8,10 +8,10 @@ class SupportsLt(Protocol):
     def __lt__(self, other: R) -> bool: ...
 
 
-type FilterFunc = Callable[[R], bool]
-type MapFunc = Callable[[R], Any]
-type SortFunc = Callable[[R], SupportsLt]
+FilterFunc: TypeAlias = Callable[[R], bool]
+MapFunc: TypeAlias = Callable[[R], Any]
+SortFunc: TypeAlias = Callable[[R], SupportsLt]
 
-type ListMultiplier = int
-type ListAddend = list[R]
-type ListComparand = list[R]
+ListMultiplier: TypeAlias = int
+ListAddend: TypeAlias = list[R]
+ListComparand: TypeAlias = list[R]
